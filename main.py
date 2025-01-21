@@ -1,3 +1,5 @@
+import pygame
+pygame.init()
 import pathlib
 import random
 from string import ascii_lowercase
@@ -5,6 +7,22 @@ try:
     import toml
 except ModuleNotFoundError:
     import tomli as toml
+
+canvas = pygame.display.set_mode((500, 500))
+pygame.display.set_caption('My quiz!')
+
+exit = False
+while not exit:
+    canvas.fill((0, 0, 255))
+    pygame.display.update()
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            exit = True
+            pygame.quit()
+
+
+
+
 
 NUM_QUESTIONS_PER_QUIZ = 5
 QUESTIONS_PATH = pathlib.Path(__file__).parent / "questions5.toml"
