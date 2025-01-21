@@ -8,22 +8,55 @@ try:
 except ModuleNotFoundError:
     import tomli as toml
 
-canvas = pygame.display.set_mode((500, 500))
-pygame.display.set_caption('My quiz!')
+objects = []
 
-exit = False
-while not exit:
-    canvas.fill((0, 0, 255))
-    pygame.display.update()
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            exit = True
-            pygame.quit()
+import pygame
 
 
+class Button():
+    def __init__(self, x, y, width, height, buttonText='Button', onclickFunctions=None):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.onclickFunctions = onclickFunctions
+        self.onPress = False
+        self.fillColors = {'normal': '#ffffff', 'hover': '#666666', 'pressed': '#333333'}
+
+        font = pygame.font.SysFont('Comic Sans MS', 30)
+        self.buttonSurface = pygame.Surface((self.width, self.height))
+        self.buttonRect = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.buttonSurf = font.render(buttonText, True, (20, 20, 20))
+        objects.append(self)
 
 
 
+    def update(self):
+        mousePos = pygame.mouse.get_pos()
+        self.buttonSurface.fill(self.fillColors['normal'])
+        if self.buttonRect.collidepoint(mousePos):
+            self.buttonSurface.fill(self.fillColors['hover'])
+            if pygame.mouse.get_pressed(num_buttons=3)[0]:
+                self.buttonSurface.fill(self.fillColors['pressed'])
+                self.onclickFunctions()
+        self.buttonSurface.blit(self.buttonSurf, [self.buttonRect.width/2 - self.buttonSurf.get_rect().width/2, self.buttonRect.height/2 - self.buttonSurf.get_rect().height/2])
+        canvas.blit(self.buttonSurface, self.buttonRect)
+
+def testFunctions():
+    print('test')
+
+
+
+
+
+play_button = Button(500, 500, 100, 50, testFunctions())
+
+
+
+
+
+
+'''
 NUM_QUESTIONS_PER_QUIZ = 5
 QUESTIONS_PATH = pathlib.Path(__file__).parent / "questions5.toml"
 
@@ -105,3 +138,79 @@ def get_answers(question, alternatives, num_choices=1, hint=None):
 
 if __name__ == "__main__":
     run_quiz()
+'''
+
+
+
+
+
+
+
+
+
+
+
+
+canvas = pygame.display.set_mode((1000, 900))
+pygame.display.set_caption('My quiz!')
+
+
+font = pygame.font.SysFont('Comic Sans MS', 100)
+main_title = font.render('Grand quiz', False, (0, 0, 0))
+
+
+exit = False
+while not exit:
+
+
+    canvas.fill((0, 0, 255))
+
+    canvas.blit(main_title, (250, 20))
+
+
+
+
+
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            exit = True
+            pygame.quit()
+
+    for object in objects:
+        object.update()
+
+
+
+
+
+
+
+
+    pygame.display.update()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

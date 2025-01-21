@@ -1,3 +1,4 @@
+
 [[questions]]
 question = "When was the first known use of the word 'quiz'"
 answers = ["1781"]
@@ -106,3 +107,49 @@ explanation = """
     There is no built-in @docstring decorator. Many functions naturally return
     strings. Such a feature can therefore not be used for docstrings.
 """
+
+
+#проект
+[[questions]]
+question = """Сколько сельских поселений находилось на территории современного Красногорска?"""
+answer = "5"
+alternatives = ['4', '7', '8']
+hint = " "
+explanation = """К концу 19 века на территории современного Красногорска находился фабричный посёлок Баньки, село Павшино и деревня Чернево. В 1932 поселки Банька, Красная Горка и село Павшино объединили в один поселок городского типа – Красногорск, который стал центром нового Красногорского района. Со временем присоединили село Знаменское –Губайлово и деревню Чернево."""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
