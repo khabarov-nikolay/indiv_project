@@ -38,7 +38,13 @@ class Button():
             self.buttonSurface.fill(self.fillColors['hover'])
             if pygame.mouse.get_pressed(num_buttons=3)[0]:
                 self.buttonSurface.fill(self.fillColors['pressed'])
-                self.onclickFunctions()
+                if not self.onPress:
+                    self.onclickFunctions()
+                    self.onPress = True
+            else:
+                self.onPress = False
+
+
         self.buttonSurface.blit(self.buttonSurf, [self.buttonRect.width/2 - self.buttonSurf.get_rect().width/2, self.buttonRect.height/2 - self.buttonSurf.get_rect().height/2])
         canvas.blit(self.buttonSurface, self.buttonRect)
 
@@ -49,7 +55,7 @@ def testFunctions():
 
 
 
-play_button = Button(500, 500, 100, 50, testFunctions())
+play_button = Button(500, 500, 200, 100, 'Button', testFunctions)
 
 
 
@@ -169,7 +175,10 @@ while not exit:
 
 
 
+    for object in objects:
+        object.update()
 
+    pygame.display.update()
 
 
     for event in pygame.event.get():
@@ -177,17 +186,8 @@ while not exit:
             exit = True
             pygame.quit()
 
-    for object in objects:
-        object.update()
 
 
-
-
-
-
-
-
-    pygame.display.update()
 
 
 
