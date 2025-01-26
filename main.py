@@ -55,13 +55,13 @@ def testFunctions():
 
 
 def end():
-    pygame.quit()
+    exit()
 
 
 #play_button = Button(500, 500, 200, 100, 'Button', testFunctions)
 
-button_start = Button(100, 100, 200, 100, 'START', testFunctions)
-button_end = Button(500, 500, 200, 100, 'EXIT', end)
+button_start = Button(400, 300, 200, 100, 'START', testFunctions)
+button_end = Button(400, 410, 200, 100, 'EXIT', end)
 
 
 
@@ -178,8 +178,9 @@ main_title = font.render('Grand quiz', False, (0, 0, 0))
 
 
 
-exit = False
-while not exit:
+
+while True:
+    pygame.display.update()
 
 
     canvas.fill((0, 0, 255))
@@ -194,13 +195,12 @@ while not exit:
     for object in objects:
         object.update()
 
-    pygame.display.update()
+
 
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            exit = True
-            pygame.quit()
+            exit()
 
 
 
