@@ -8,7 +8,10 @@ try:
 except ModuleNotFoundError:
     import tomli as toml
 
+NUM_QUESTIONS_PER_QUIZ = 5
+QUESTIONS_PATH = pathlib.Path(__file__).parent / "questions5.toml"
 objects = []
+questions = []
 
 
 
@@ -48,39 +51,56 @@ class Button():
         self.buttonSurface.blit(self.buttonSurf, [self.buttonRect.width/2 - self.buttonSurf.get_rect().width/2, self.buttonRect.height/2 - self.buttonSurf.get_rect().height/2])
         canvas.blit(self.buttonSurface, self.buttonRect)
 
-def testFunctions():
-    print('test')
+def prepare_questions(path, num_questions):
+    questions = toml.loads(path.read_text())["questions"]
+    num_questions = min(num_questions, len(questions))
+    return random.sample(questions, k=num_questions)
 
+def start_game():
+    objects.clear()
+    questions.clear()
+    questions.append(prepare_questions(QUESTIONS_PATH, num_questions=NUM_QUESTIONS_PER_QUIZ))
 
-
-
-def end():
+def end_game():
     exit()
 
+button_start = Button(400, 300, 200, 100, 'START', start_game)
+button_end = Button(400, 410, 200, 100, 'EXIT', end_game)
 
-#play_button = Button(500, 500, 200, 100, 'Button', testFunctions)
-
-button_start = Button(400, 300, 200, 100, 'START', testFunctions)
-button_end = Button(400, 410, 200, 100, 'EXIT', end)
-
-
-
-
+if __name__ == "__main__":
+    question_text = ""
+    canvas = pygame.display.set_mode((1000, 900))
+    pygame.display.set_caption('My quiz!')
 
 
+    font = pygame.font.SysFont('Comic Sans MS', 100)
+    main_title = font.render('Grand quiz', False, (0, 0, 0))
+
+    question = font.render(question_text, False, (0, 0, 0))
 
 
+    while True:
+        pygame.display.update()
+
+        canvas.fill((0, 0, 255))
+
+        if len(questions) == 0:
+            canvas.blit(main_title, (250, 20))
+        else:
+            canvas.blit(question, (250, 20))
+
+        for object in objects:
+            object.update()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                exit()
 
 
 
 '''
-NUM_QUESTIONS_PER_QUIZ = 5
-QUESTIONS_PATH = pathlib.Path(__file__).parent / "questions5.toml"
 
 def run_quiz():
-    questions = prepare_questions(
-        QUESTIONS_PATH, num_questions=NUM_QUESTIONS_PER_QUIZ
-    )
 
     num_correct = 0
     for num, question in enumerate(questions, start=1):
@@ -88,11 +108,6 @@ def run_quiz():
         num_correct += ask_question(question)
 
     print(f"\nYou got {num_correct} correct out of {num} questions")
-
-def prepare_questions(path, num_questions):
-    questions = toml.loads(path.read_text())["questions"]
-    num_questions = min(num_questions, len(questions))
-    return random.sample(questions, k=num_questions)
 
 def ask_question(question):
     correct_answers = question["answers"]
@@ -151,82 +166,5 @@ def get_answers(question, alternatives, num_choices=1, hint=None):
             )
             continue
 
-        return [labeled_alternatives[answer] for answer in answers]
-
-if __name__ == "__main__":
-    run_quiz()
+        return [labeled_alternatives[answer] for answer in answers
 '''
-
-
-
-
-
-
-
-
-
-
-
-
-canvas = pygame.display.set_mode((1000, 900))
-pygame.display.set_caption('My quiz!')
-
-
-font = pygame.font.SysFont('Comic Sans MS', 100)
-main_title = font.render('Grand quiz', False, (0, 0, 0))
-
-
-
-
-
-while True:
-    pygame.display.update()
-
-
-    canvas.fill((0, 0, 255))
-
-
-
-    canvas.blit(main_title, (250, 20))
-
-
-
-
-    for object in objects:
-        object.update()
-
-
-
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            exit()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
