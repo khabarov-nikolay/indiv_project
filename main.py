@@ -10,7 +10,7 @@ except ModuleNotFoundError:
 
 objects = []
 
-import pygame
+
 
 
 class Button():
@@ -54,8 +54,19 @@ def testFunctions():
 
 
 
+def end():
+    pygame.quit()
 
-play_button = Button(500, 500, 200, 100, 'Button', testFunctions)
+
+#play_button = Button(500, 500, 200, 100, 'Button', testFunctions)
+
+button_start = Button(100, 100, 200, 100, 'START', testFunctions)
+button_end = Button(500, 500, 200, 100, 'EXIT', end)
+
+
+
+
+
 
 
 
@@ -165,13 +176,18 @@ font = pygame.font.SysFont('Comic Sans MS', 100)
 main_title = font.render('Grand quiz', False, (0, 0, 0))
 
 
+
+
 exit = False
 while not exit:
 
 
     canvas.fill((0, 0, 255))
 
+
+
     canvas.blit(main_title, (250, 20))
+
 
 
 
