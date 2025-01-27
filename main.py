@@ -13,6 +13,7 @@ QUESTIONS_PATH = pathlib.Path(__file__).parent / "questions5.toml"
 objects = []
 questions = []
 question_count = 0
+question_answered = False
 
 
 
@@ -39,19 +40,20 @@ class Button():
 
     def update(self):
 
-        if not self.show_color:
-            mousePos = pygame.mouse.get_pos()
-            self.buttonSurface.fill(self.fillColors['normal'])
-            if self.buttonRect.collidepoint(mousePos):
-                self.buttonSurface.fill(self.fillColors['hover'])
-                if pygame.mouse.get_pressed(num_buttons=3)[0]:
-                    self.buttonSurface.fill(self.fillColors['pressed'])
-                    if not self.onPress:
-                        self.onclickFunctions()
-                        self.onPress = True
-                else:
-                    self.onPress = False
-        else:
+
+        mousePos = pygame.mouse.get_pos()
+        self.buttonSurface.fill(self.fillColors['normal'])
+        if self.buttonRect.collidepoint(mousePos):
+            self.buttonSurface.fill(self.fillColors['hover'])
+            if pygame.mouse.get_pressed(num_buttons=3)[0]:
+                self.buttonSurface.fill(self.fillColors['pressed'])
+                if not self.onPress:
+                    self.onclickFunctions()
+                    self.onPress = True
+            else:
+                self.onPress = False
+
+        if self.show_color:
             if self.is_answer:
                 self.buttonSurface.fill('#00ff00')
             elif self.is_answer != None:
@@ -61,14 +63,22 @@ class Button():
         canvas.blit(self.buttonSurface, self.buttonRect)
 
 def next_question():
-    global question_count
-    question_count += 1
+    global question_answered
+    if question_answered:
+        global question_count
+        question_count += 1
+        start_game()
+        question_answered = False
 
 def correct():
+    global question_answered
+    question_answered = True
     for i in objects:
         i.show_color = True
 
 def wrong():
+    global question_answered
+    question_answered = True
     for i in objects:
         i.show_color = True
 
@@ -95,12 +105,7 @@ def start_game():
     next_button = Button(500, 800, 100, 100, "Next", next_question, None)
 
 def end_game():
-    #exit()
-    pass
-
-def init_question():
-    pass
-
+    exit()
 
 button_start = Button(400, 300, 200, 100, 'START', start_game)
 button_end = Button(400, 410, 200, 100, 'EXIT', end_game)
