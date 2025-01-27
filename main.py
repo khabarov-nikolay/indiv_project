@@ -12,6 +12,7 @@ NUM_QUESTIONS_PER_QUIZ = 5
 QUESTIONS_PATH = pathlib.Path(__file__).parent / "questions5.toml"
 objects = []
 questions = []
+question_count = 0
 
 
 
@@ -61,6 +62,13 @@ def start_game():
     questions.clear()
     questions.append(prepare_questions(QUESTIONS_PATH, num_questions=NUM_QUESTIONS_PER_QUIZ))
 
+    answ_text = questions[0][question_count]['answers'][0]
+    answ_button = Button(260, 600, 100, 100, answ_text, start_game)
+
+    for i, alt in enumerate(questions[0][question_count]['alternatives']):
+        answ_text = questions[0][question_count]['alternatives'][i]
+        butt = Button(400 + 120 * i, 600, 100, 100, answ_text, start_game)
+
 def end_game():
     exit()
 
@@ -72,7 +80,6 @@ button_start = Button(400, 300, 200, 100, 'START', start_game)
 button_end = Button(400, 410, 200, 100, 'EXIT', end_game)
 
 if __name__ == "__main__":
-    question_count = 0
     question_text = ""
     canvas = pygame.display.set_mode((1000, 900))
     pygame.display.set_caption('My quiz!')
@@ -81,9 +88,6 @@ if __name__ == "__main__":
     font = pygame.font.SysFont('Comic Sans MS', 100)
     question_font = pygame.font.SysFont('Comic Sans MS', 20)
     main_title = font.render('Grand quiz', False, (0, 0, 0))
-
-
-
 
     while True:
         pygame.display.update()
