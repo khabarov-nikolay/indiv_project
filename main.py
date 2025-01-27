@@ -64,8 +64,8 @@ class Button():
 
 def next_question():
     global question_answered
-    if question_answered:
-        global question_count
+    global question_count
+    if question_answered and question_count < NUM_QUESTIONS_PER_QUIZ - 1:
         question_count += 1
         start_game()
         question_answered = False
