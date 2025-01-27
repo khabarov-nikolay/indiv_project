@@ -54,11 +54,15 @@ class Button():
         else:
             if self.is_answer:
                 self.buttonSurface.fill('#00ff00')
-            else:
+            elif self.is_answer != None:
                 self.buttonSurface.fill('#ff0000')
 
         self.buttonSurface.blit(self.buttonSurf, [self.buttonRect.width/2 - self.buttonSurf.get_rect().width/2, self.buttonRect.height/2 - self.buttonSurf.get_rect().height/2])
         canvas.blit(self.buttonSurface, self.buttonRect)
+
+def next_question():
+    global question_count
+    question_count += 1
 
 def correct():
     for i in objects:
@@ -86,6 +90,9 @@ def start_game():
     for i, alt in enumerate(questions[0][question_count]['alternatives']):
         answ_text = questions[0][question_count]['alternatives'][i]
         butt = Button(400 + 120 * i, 600, 100, 100, answ_text, wrong)
+
+
+    next_button = Button(500, 800, 100, 100, "Next", next_question, None)
 
 def end_game():
     #exit()
