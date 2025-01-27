@@ -18,13 +18,15 @@ question_count = 0
 
 
 class Button():
-    def __init__(self, x, y, width, height, buttonText='Button', onclickFunctions=None):
+    def __init__(self, x, y, width, height, buttonText='Button', onclickFunctions=None, is_answer = False):
         self.x = x
         self.y = y
         self.width = width
         self.height = height
+        self.show_color = False
         self.onclickFunctions = onclickFunctions
         self.onPress = False
+        self.is_answer = is_answer
         self.fillColors = {'normal': '#ffffff', 'hover': '#666666', 'pressed': '#333333'}
 
         font = pygame.font.SysFont('Comic Sans MS', 30)
@@ -36,21 +38,35 @@ class Button():
 
 
     def update(self):
-        mousePos = pygame.mouse.get_pos()
-        self.buttonSurface.fill(self.fillColors['normal'])
-        if self.buttonRect.collidepoint(mousePos):
-            self.buttonSurface.fill(self.fillColors['hover'])
-            if pygame.mouse.get_pressed(num_buttons=3)[0]:
-                self.buttonSurface.fill(self.fillColors['pressed'])
-                if not self.onPress:
-                    self.onclickFunctions()
-                    self.onPress = True
-            else:
-                self.onPress = False
 
+        if not self.show_color:
+            mousePos = pygame.mouse.get_pos()
+            self.buttonSurface.fill(self.fillColors['normal'])
+            if self.buttonRect.collidepoint(mousePos):
+                self.buttonSurface.fill(self.fillColors['hover'])
+                if pygame.mouse.get_pressed(num_buttons=3)[0]:
+                    self.buttonSurface.fill(self.fillColors['pressed'])
+                    if not self.onPress:
+                        self.onclickFunctions()
+                        self.onPress = True
+                else:
+                    self.onPress = False
+        else:
+            if self.is_answer:
+                self.buttonSurface.fill('#00ff00')
+            else:
+                self.buttonSurface.fill('#ff0000')
 
         self.buttonSurface.blit(self.buttonSurf, [self.buttonRect.width/2 - self.buttonSurf.get_rect().width/2, self.buttonRect.height/2 - self.buttonSurf.get_rect().height/2])
         canvas.blit(self.buttonSurface, self.buttonRect)
+
+def correct():
+    for i in objects:
+        i.show_color = True
+
+def wrong():
+    for i in objects:
+        i.show_color = True
 
 def prepare_questions(path, num_questions):
     questions = toml.loads(path.read_text())["questions"]
@@ -59,18 +75,21 @@ def prepare_questions(path, num_questions):
 
 def start_game():
     objects.clear()
-    questions.clear()
-    questions.append(prepare_questions(QUESTIONS_PATH, num_questions=NUM_QUESTIONS_PER_QUIZ))
+
+    if question_count == 0:
+        questions.clear()
+        questions.append(prepare_questions(QUESTIONS_PATH, num_questions=NUM_QUESTIONS_PER_QUIZ))
 
     answ_text = questions[0][question_count]['answers'][0]
-    answ_button = Button(260, 600, 100, 100, answ_text, start_game)
+    answ_button = Button(260, 600, 100, 100, answ_text, correct, True)
 
     for i, alt in enumerate(questions[0][question_count]['alternatives']):
         answ_text = questions[0][question_count]['alternatives'][i]
-        butt = Button(400 + 120 * i, 600, 100, 100, answ_text, start_game)
+        butt = Button(400 + 120 * i, 600, 100, 100, answ_text, wrong)
 
 def end_game():
-    exit()
+    #exit()
+    pass
 
 def init_question():
     pass
