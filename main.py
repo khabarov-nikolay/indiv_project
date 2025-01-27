@@ -64,19 +64,25 @@ def start_game():
 def end_game():
     exit()
 
+def init_question():
+    pass
+
+
 button_start = Button(400, 300, 200, 100, 'START', start_game)
 button_end = Button(400, 410, 200, 100, 'EXIT', end_game)
 
 if __name__ == "__main__":
+    question_count = 0
     question_text = ""
     canvas = pygame.display.set_mode((1000, 900))
     pygame.display.set_caption('My quiz!')
 
 
     font = pygame.font.SysFont('Comic Sans MS', 100)
+    question_font = pygame.font.SysFont('Comic Sans MS', 20)
     main_title = font.render('Grand quiz', False, (0, 0, 0))
 
-    question = font.render(question_text, False, (0, 0, 0))
+
 
 
     while True:
@@ -87,6 +93,8 @@ if __name__ == "__main__":
         if len(questions) == 0:
             canvas.blit(main_title, (250, 20))
         else:
+            question_text = questions[0][question_count]['question']
+            question = question_font.render(question_text, False, (0, 0, 0))
             canvas.blit(question, (250, 20))
 
         for object in objects:
@@ -95,9 +103,6 @@ if __name__ == "__main__":
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
-
-
-
 '''
 
 def run_quiz():
