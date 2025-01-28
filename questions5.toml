@@ -1,155 +1,66 @@
+[[questions]]
+question = "В каком году рабочий посёлок Красногорск был преобразован в город?"
+answers = ["1940"]
+alternatives = ["1850", "1926", "1932"]
 
 [[questions]]
-question = "When was the first known use of the word 'quiz'"
-answers = ["1781"]
-alternatives = ["1771", "1871", "1881"]
+question = "Назовите год рождения легендарного дуба?"
+answers = ["1745"]
+alternatives = ["1812", "1630", "1910"]
 
 [[questions]]
-question = "Which built-in function can get information from the user"
-answers = ["input"]
-alternatives = ["get", "print", "write"]
-
-[[questions]]
-question = "What's the purpose of the built-in zip() function"
-answers = ["To iterate over two or more sequences at the same time"]
+question = "На территории храма Знамение Божией Матери г. Красногорска находится часовня-усыпальница. Кому она принадлежала?"
+answers = ["Поляковым"]
 alternatives = [
-    "To combine several strings into one",
-    "To compress several files into one archive",
-    "To get information from the user",
+    "Юсуповым",
+    "Волынским",
+    "Долгоруким",
 ]
 
 [[questions]]
-question = "What does dict.get(key) return if key isn't found in dict"
-answers = ["None"]
-alternatives = ["key", "True", "False"]
+question = "Силами каких военнопленных в 1947-1949г.г. было построено здание РГАКФД?"
+answers = ["японских"]
+alternatives = ["немецких", "румынских", "венгерских"]
 
 [[questions]]
-question = "How do you iterate over both indices and elements in an iterable"
-answers = ["enumerate(iterable)"]
+question = "Кто был инициатором создания Мемориального музея немецких антифашистов?"
+answers = ["руководство ГДР"]
 alternatives = [
-    "enumerate(iterable, start=1)",
-    "range(iterable)",
-    "range(iterable, start=1)",
+    "местные жители",
+    "СССР",
+    "участники немецкого Сопротивления",
 ]
 
 [[questions]]
-question = "What's the official name of the := operator"
-answers = ["Assignment expression"]
-alternatives = ["Named expression", "Walrus operator", "Colon equals operator"]
+question = "В каком году был основан Красногорский завод имени С. А. Зверева?"
+answers = ["1942"]
+alternatives = ["1927", "1932", "1940"]
 
 [[questions]]
-question = "What's one effect of calling random.seed(42)"
-answers = ["The random numbers are reproducible."]
+question = "Что изображено на логотипе Красногорского завода имени С. А. Зверева?"
+answers = ["призма Дове со стрелкой"]
 alternatives = [
-    "The random numbers are more random.",
-    "The computer clock is reset.",
-    "The first random number is always 42.",
+    "пентапризма",
+    "линза",
+    "лупа",
 ]
 
 [[questions]]
-question = "When does __name__ == '__main__' equal True in a Python file"
-answers = ["When the file is run as a script"]
+question = "Около проходной завода находится скульптура «Юный фотограф». Что изображает пьедестал скульптуры?"
+answers = ["линза"]
 alternatives = [
-    "When the file is imported as a module",
-    "When the file has a valid name",
-    "When the file only has one function",
+    "объектив",
+    "призма",
+    "лупа",
 ]
 
 [[questions]]
-question = "Which version of Python is the first with TOML support built in"
-answers = ["3.11"]
-alternatives = ["3.9", "3.10", "3.12"]
+question = "На яблоневой аллее в г. Красногорске находится памятник фронтовому кинооператору. Кто стал прототипом памятника?"
+answers = ["В. Сущинский"]
+alternatives = ["Р.Кармен", "С. Школьников", "собирательный образ"]
 
 [[questions]]
-question = "What's the name of the list-like data structure in TOML"
-answers = ["Array"]
-alternatives = ["List", "Sequence", "Set"]
-
-[[questions]]
-question = "How can you run a Python script named quiz.py"
-answers = ["python quiz.py", "python -m quiz"]
-alternatives = ["python quiz", "python -m quiz.py"]
-hint = "One option uses the filename, and the other uses the module name."
-
-[[questions]]
-question = "What's a PEP"
-answers = ["A Python Enhancement Proposal"]
-alternatives = [
-    "A Pretty Exciting Policy",
-    "A Preciously Evolved Python",
-    "A Potentially Epic Prize",
-]
-hint = "PEPs are used to evolve Python."
-explanation = """
-    Python Enhancement Proposals (PEPs) are design documents that provide
-    information to the Python community. PEPs are used to propose new features
-    for the Python language, to collect community input on an issue, and to
-    document design decisions made about the language.
-"""
-
-[[questions]]
-question = "How can you add a docstring to a function"
-answers = [
-    "By writing a string literal as the first statement in the function",
-    "By assigning a string to the function's .__doc__ attribute",
-]
-alternatives = [
-    "By using the built-in @docstring decorator",
-    "By returning a string from the function",
-]
-hint = "They are parsed from your code and stored on the function object."
-explanation = """
-    Docstrings document functions and other Python objects. A docstring is a
-    string literal that occurs as the first statement in a module, function,
-    class, or method definition. Such a docstring becomes the .__doc__ special
-    attribute of that object. See PEP 257 for more information.
-
-    There is no built-in @docstring decorator. Many functions naturally return
-    strings. Such a feature can therefore not be used for docstrings.
-"""
-
-
-#проект
-[[questions]]
-question = """Сколько сельских поселений находилось на территории современного Красногорска?"""
-answers = "5"
-alternatives = ['4', '7', '8']
-hint = " "
-explanation = """К концу 19 века на территории современного Красногорска находился фабричный посёлок Баньки, село Павшино и деревня Чернево. В 1932 поселки Банька, Красная Горка и село Павшино объединили в один поселок городского типа – Красногорск, который стал центром нового Красногорского района. Со временем присоединили село Знаменское –Губайлово и деревню Чернево."""
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+question = "Какой Болгарский город побратим г. Красногорску?"
+answers = ["Сливница"]
+alternatives = ["Радомир", "Славяново", "Златица"]
 
