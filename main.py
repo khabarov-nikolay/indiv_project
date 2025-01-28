@@ -3,10 +3,7 @@ pygame.init()
 import pathlib
 import random
 from string import ascii_lowercase
-try:
-    import toml
-except ModuleNotFoundError:
-    import tomli as toml
+import tomli
 
 NUM_QUESTIONS_PER_QUIZ = 5
 QUESTIONS_PATH = pathlib.Path(__file__).parent / "questions5.toml"
@@ -83,7 +80,7 @@ def wrong():
         i.show_color = True
 
 def prepare_questions(path, num_questions):
-    questions = toml.loads(path.read_text())["questions"]
+    questions = tomli.loads(path.read_text())["questions"]
     num_questions = min(num_questions, len(questions))
     return random.sample(questions, k=num_questions)
 
