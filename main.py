@@ -137,6 +137,24 @@ def start_game():
 
     next_button = Button(800, 770, 100, 100, "Next", next_question, None)
 
+def reset():
+    global is_game_finished
+    is_game_finished = False
+    global objects
+    objects.clear()
+    global questions
+    questions.clear()
+    global question_count
+    question_count = 0
+    global question_answered
+    question_answered = False
+    global correct_count
+    correct_count = 0
+
+    button_start = Button(400, 300, 200, 100, 'START', start_game)
+    button_end = Button(400, 410, 200, 100, 'EXIT', end_game)
+
+
 def end_game():
     exit()
 
@@ -168,6 +186,8 @@ if __name__ == "__main__":
             blit_text(canvas, question_text, (20, 500), question_font)
         elif is_game_finished:
             objects.clear()
+            exit_button = Button(400, 510, 200, 100, 'EXIT', end_game)
+            home_button = Button(400, 400, 200, 100, 'MENU', reset)
             font = pygame.font.SysFont('Comic Sans MS', 60)
             end_title = font.render('Поздравляем, вы прошли квиз!', False, (0, 0, 0))
             score = font.render(f'Правильных ответов: {correct_count}', False, (0, 0, 0))
