@@ -169,10 +169,11 @@ if __name__ == "__main__":
         elif is_game_finished:
             objects.clear()
             font = pygame.font.SysFont('Comic Sans MS', 60)
-            end_title = font.render('Поздравляем, вы прошли квиз!', False, (0, 0, 0))
-            score = font.render(f'Правильных ответов: {correct_count}', False, (0, 0, 0))
+            end_title = font.render('Поздравляем, вы прошли квиз!', False, (255, 255, 255))
+            score = font.render(f'Правильных ответов: {correct_count}', False, (255, 255, 255))            #вставить переменную в текст
             canvas.blit(end_title, (20, 20))
             canvas.blit(score, (20, 200))
+
 
         for object in objects:
             object.update()
