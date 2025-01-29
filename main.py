@@ -14,6 +14,8 @@ objects = []
 questions = []
 question_count = 0
 question_answered = False
+correct_count = 0
+is_game_finished = False
 
 
 
@@ -63,14 +65,19 @@ class Button():
         canvas.blit(self.buttonSurface, self.buttonRect)
 
 def next_question():
+    global is_game_finished
     global question_answered
     global question_count
     if question_answered and question_count < NUM_QUESTIONS_PER_QUIZ - 1:
         question_count += 1
         start_game()
         question_answered = False
+    elif question_answered and question_count >= NUM_QUESTIONS_PER_QUIZ - 1:
+        is_game_finished = True
 
 def correct():
+    global correct_count
+    correct_count += 1
     global question_answered
     question_answered = True
     for i in objects:
@@ -153,12 +160,19 @@ if __name__ == "__main__":
 
         if len(questions) == 0:
             canvas.blit(main_title, (250, 20))
-        else:
+        elif not is_game_finished:
             question_text = questions[0][question_count]['question']
 
             question = question_font.render(question_text.encode('utf-8'), False, (255, 255, 255))
 
-            blit_text(canvas, question_text, (20, 20), question_font)
+            blit_text(canvas, question_text, (20, 500), question_font)
+        elif is_game_finished:
+            objects.clear()
+            font = pygame.font.SysFont('Comic Sans MS', 60)
+            end_title = font.render('Поздравляем, вы прошли квиз!', False, (0, 0, 0))
+            score = font.render(f'Правильных ответов: {correct_count}', False, (0, 0, 0))
+            canvas.blit(end_title, (20, 20))
+            canvas.blit(score, (20, 200))
 
         for object in objects:
             object.update()
