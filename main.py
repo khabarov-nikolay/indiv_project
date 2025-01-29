@@ -3,9 +3,12 @@ pygame.init()
 import pathlib
 import random
 from string import ascii_lowercase
-import tomli
+try:
+    import toml
+except ModuleNotFoundError:
+    import tomli as toml
 
-NUM_QUESTIONS_PER_QUIZ = 5
+NUM_QUESTIONS_PER_QUIZ = 10
 QUESTIONS_PATH = pathlib.Path(__file__).parent / "questions5.toml"
 objects = []
 questions = []
@@ -80,8 +83,12 @@ def wrong():
         i.show_color = True
 
 def prepare_questions(path, num_questions):
-    questions = tomli.loads(path.read_text())["questions"]
+    io = open(path, 'r', encoding='utf-8')
+    text = io.read()
+    io.close()
+    questions = toml.loads(text)['questions']
     num_questions = min(num_questions, len(questions))
+
     return random.sample(questions, k=num_questions)
 
 def start_game():
@@ -92,14 +99,14 @@ def start_game():
         questions.append(prepare_questions(QUESTIONS_PATH, num_questions=NUM_QUESTIONS_PER_QUIZ))
 
     answ_text = questions[0][question_count]['answers'][0]
-    answ_button = Button(260, 600, 100, 100, answ_text, correct, True)
+    answ_button = Button(200, 400, 550, 100, answ_text, correct, True)
 
     for i, alt in enumerate(questions[0][question_count]['alternatives']):
         answ_text = questions[0][question_count]['alternatives'][i]
-        butt = Button(400 + 120 * i, 600, 100, 100, answ_text, wrong)
+        butt = Button(200, 520 + 120 * i, 550, 100, answ_text, wrong)
 
 
-    next_button = Button(500, 800, 100, 100, "Next", next_question, None)
+    next_button = Button(800, 770, 100, 100, "Next", next_question, None)
 
 def end_game():
     exit()
@@ -126,8 +133,10 @@ if __name__ == "__main__":
             canvas.blit(main_title, (250, 20))
         else:
             question_text = questions[0][question_count]['question']
-            question = question_font.render(question_text, False, (0, 0, 0))
-            canvas.blit(question, (250, 20))
+
+            question = question_font.render(question_text.encode('utf-8'), False, (255, 255, 255))
+
+            canvas.blit(question, (10, 10))
 
         for object in objects:
             object.update()
@@ -205,3 +214,5 @@ def get_answers(question, alternatives, num_choices=1, hint=None):
 
         return [labeled_alternatives[answer] for answer in answers
 '''
+
+
