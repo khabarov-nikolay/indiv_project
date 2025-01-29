@@ -179,7 +179,6 @@ if __name__ == "__main__":
         canvas.fill((0, 0, 255))
 
         if len(questions) == 0:
-            print("main")
             canvas.blit(main_title, (250, 20))
         elif not is_game_finished:
             question_text = questions[0][question_count]['question']
@@ -194,6 +193,19 @@ if __name__ == "__main__":
             font = pygame.font.SysFont('Comic Sans MS', 60)
             end_title = font.render('Поздравляем, вы прошли квиз!', False, (255, 255, 255))
             score = font.render(f'Правильных ответов: {correct_count}', False, (255, 255, 255))
+
+            medal = None
+
+            if correct_count <= 3:
+                medal = pygame.image.load("images/three.png")
+            elif 3 < correct_count <= 7:
+                medal = pygame.image.load("images/two.png")
+            else:
+                medal = pygame.image.load("images/one.png")
+
+            medal = pygame.transform.scale(medal, (400, 300))
+
+            canvas.blit(medal, [200, 200])
             canvas.blit(end_title, (20, 20))
             canvas.blit(score, (20, 200))
 
