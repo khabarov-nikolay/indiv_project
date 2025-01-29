@@ -99,11 +99,16 @@ def start_game():
         questions.append(prepare_questions(QUESTIONS_PATH, num_questions=NUM_QUESTIONS_PER_QUIZ))
 
     answ_text = questions[0][question_count]['answers'][0]
-    answ_button = Button(200, 400, 550, 100, answ_text, correct, True)
+    possition_offsets = [[0, 0], [350, 0], [0, 150], [350, 150]]
+    index = random.randint(0, len(possition_offsets) - 1)
+    answ_button = Button(50 + possition_offsets[index][0], 600 + possition_offsets[index][1], 320, 100, answ_text, correct, True)
+    possition_offsets.remove(possition_offsets[index])
 
     for i, alt in enumerate(questions[0][question_count]['alternatives']):
         answ_text = questions[0][question_count]['alternatives'][i]
-        butt = Button(200, 520 + 120 * i, 550, 100, answ_text, wrong)
+        index = random.randint(0, len(possition_offsets) - 1)
+        butt = Button(50 + possition_offsets[index][0], 600 + possition_offsets[index][1], 320, 100, answ_text, wrong)
+        possition_offsets.remove(possition_offsets[index])
 
 
     next_button = Button(800, 770, 100, 100, "Next", next_question, None)
