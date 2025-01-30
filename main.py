@@ -167,20 +167,45 @@ if __name__ == "__main__":
     question_text = ""
     canvas = pygame.display.set_mode((1000, 900))
     pygame.display.set_caption('My quiz!')
+    zastavka = pygame.image.load('images/заставка.jpg')
+    zastavka = pygame.transform.scale(zastavka, (1000, 900))
+
 
 
     font = pygame.font.SysFont('Comic Sans MS', 100)
     question_font = pygame.font.SysFont('Comic Sans MS', 20)
     main_title = font.render('Grand quiz', False, (0, 0, 0))
+    alpha = 0
+    while alpha <= 170:
+        pygame.display.update()
+        canvas.fill('#ffffff')
+        canvas.blit(zastavka, (0, 0))
+        zastavka.set_alpha(alpha)
+        alpha += 1
+        pygame.time.wait(11)
+        if alpha == 170:
+            pygame.time.wait(10)
+
+
+
+
+
+
 
     while True:
         pygame.display.update()
 
-        canvas.fill((0, 0, 255))
+        canvas.fill('#0d7fbf')
 
         if len(questions) == 0:
             canvas.blit(main_title, (250, 20))
         elif not is_game_finished:
+
+            name_foto = questions[0][question_count]['foto'][0]
+            foto = pygame.image.load(f'images/{name_foto}')
+            foto = pygame.transform.scale(foto, (500, 400))
+            canvas.blit(foto, (0, 0))
+
             question_text = questions[0][question_count]['question']
 
             question = question_font.render(question_text.encode('utf-8'), False, (255, 255, 255))
@@ -205,9 +230,10 @@ if __name__ == "__main__":
 
             medal = pygame.transform.scale(medal, (400, 300))
 
-            canvas.blit(medal, [200, 200])
+
             canvas.blit(end_title, (20, 20))
             canvas.blit(score, (20, 200))
+            canvas.blit(medal, [200, 200])
 
 
         for object in objects:
