@@ -1,15 +1,15 @@
+
+# импортируем библиотеки
 import pygame
 pygame.init()
 import pathlib
 import random
-from string import ascii_lowercase
-try:
-    import toml
-except ModuleNotFoundError:
-    import tomli as toml
 
+import toml
+
+# создаем переменные, необходимые для работы
 NUM_QUESTIONS_PER_QUIZ = 10
-QUESTIONS_PATH = pathlib.Path(__file__).parent / "questions5.toml"
+QUESTIONS_PATH = pathlib.Path(__file__).parent / "questions5.toml"   # сохраняем местоположения файла с вопросами
 objects = []
 questions = []
 question_count = 0
@@ -19,7 +19,7 @@ is_game_finished = False
 
 
 
-
+# создаем класс обьектов для создания кнопок
 class Button():
     def __init__(self, x, y, width, height, buttonText='Button', onclickFunctions=None, is_answer = False):
         self.x = x
@@ -32,14 +32,14 @@ class Button():
         self.is_answer = is_answer
         self.fillColors = {'normal': '#ffffff', 'hover': '#666666', 'pressed': '#333333'}
 
-        font = pygame.font.SysFont('Comic Sans MS', 30)
+        font = pygame.font.SysFont('Times New Roman', 30)
         self.buttonSurface = pygame.Surface((self.width, self.height))
         self.buttonRect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.buttonSurf = font.render(buttonText, True, (20, 20, 20))
         objects.append(self)
 
 
-
+# создание функции для активации кнопок
     def update(self):
 
 
@@ -63,7 +63,7 @@ class Button():
 
         self.buttonSurface.blit(self.buttonSurf, [self.buttonRect.width/2 - self.buttonSurf.get_rect().width/2, self.buttonRect.height/2 - self.buttonSurf.get_rect().height/2])
         canvas.blit(self.buttonSurface, self.buttonRect)
-
+# создание функции, которая позволяет перейти к следующему вопросу
 def next_question():
     global is_game_finished
     global question_answered
@@ -74,7 +74,7 @@ def next_question():
         question_answered = False
     elif question_answered and question_count >= NUM_QUESTIONS_PER_QUIZ - 1:
         is_game_finished = True
-
+# создание функции, которая окрашивает кнопку с правильным ответом зеленым цветом
 def correct():
     global correct_count
     correct_count += 1
@@ -82,17 +82,17 @@ def correct():
     question_answered = True
     for i in objects:
         i.show_color = True
-
+# создание функции, которая окрашивает кнопку с правильным ответом красным цветом
 def wrong():
     global question_answered
     question_answered = True
     for i in objects:
         i.show_color = True
-
-def blit_text(surface, text, pos, font, color=pygame.Color('white')):
+# создание функции, которая позволяет переносить текст вопроса, если он не помещается в окно приложения
+def blit_text(surface, text, pos, font, color=(0, 0, 0)):
     words = [word.split(' ') for word in text.splitlines()]  # 2D array where each row is a list of words.
     space = font.size(' ')[0]  # The width of a space.
-    max_width, max_height = surface.get_size()
+    max_width, max_height = 1000, 900                     #surface.get_size()
     x, y = pos
     for line in words:
         for word in line:
@@ -106,6 +106,7 @@ def blit_text(surface, text, pos, font, color=pygame.Color('white')):
         x = pos[0]  # Reset the x.
         y += word_height  # Start on new row.
 
+# создание функции, которая подгружает текст вопроса из файла с вопросами
 def prepare_questions(path, num_questions):
     io = open(path, 'r', encoding='utf-8')
     text = io.read()
@@ -114,7 +115,7 @@ def prepare_questions(path, num_questions):
     num_questions = min(num_questions, len(questions))
 
     return random.sample(questions, k=num_questions)
-
+# создание кнопки, которая
 def start_game():
     objects.clear()
 
@@ -134,9 +135,9 @@ def start_game():
         butt = Button(50 + possition_offsets[index][0], 600 + possition_offsets[index][1], 320, 100, answ_text, wrong)
         possition_offsets.remove(possition_offsets[index])
 
-
-    next_button = Button(800, 770, 100, 100, "Next", next_question, None)
-
+    # создание кнопки "Далее"
+    next_button = Button(800, 770, 120, 100, "ДАЛЕЕ", next_question, None)
+# создание функции, которая позволяет перейти в меню
 def reset():
     global is_game_finished
     is_game_finished = False
@@ -151,166 +152,107 @@ def reset():
     global correct_count
     correct_count = 0
 
-    print("reset")
-
-    button_start = Button(400, 300, 200, 100, 'START', start_game)
-    button_end = Button(400, 410, 200, 100, 'EXIT', end_game)
 
 
+    button_start = Button((1000 - 250)//2, 300, 250, 120, 'НАЧАТЬ', start_game)
+    button_end = Button((1000 - 250)//2, 450, 250, 120, 'ВЫХОД', end_game)
+
+# создание функции, которая позволяет окончить игру
 def end_game():
     exit()
-
-button_start = Button(400, 300, 200, 100, 'START', start_game)
-button_end = Button(400, 410, 200, 100, 'EXIT', end_game)
-
+# создание кнопок "Старт" и "Выход"
+button_start = Button((1000 - 250)//2, 300, 250, 120, 'НАЧАТЬ', start_game)
+button_end = Button((1000 - 250)//2, 450, 250, 120, 'ВЫХОД', end_game)
+# запуск основного кода программы
 if __name__ == "__main__":
     question_text = ""
     canvas = pygame.display.set_mode((1000, 900))
     pygame.display.set_caption('My quiz!')
-    zastavka = pygame.image.load('images/заставка.jpg')
+
+    # создание заставки
+    zastavka = pygame.image.load('images/111.jpg')
     zastavka = pygame.transform.scale(zastavka, (1000, 900))
 
+#Comic Sans MS
 
-
-    font = pygame.font.SysFont('Comic Sans MS', 100)
-    question_font = pygame.font.SysFont('Comic Sans MS', 20)
-    main_title = font.render('Grand quiz', False, (0, 0, 0))
+    font = pygame.font.SysFont('Times New Roman', 100)
+    question_font = pygame.font.SysFont('Times New Roman', 45)
+    main_title = font.render('ВИКТОРИНА', False, (0, 0, 0))
     alpha = 0
-    while alpha <= 170:
+
+    while alpha <= 200:
         pygame.display.update()
         canvas.fill('#ffffff')
         canvas.blit(zastavka, (0, 0))
         zastavka.set_alpha(alpha)
         alpha += 1
         pygame.time.wait(11)
-        if alpha == 170:
-            pygame.time.wait(10)
+        if alpha == 200:
+            pygame.time.wait(1500)
 
 
 
 
 
 
-
+    # создание основного игрового цикла
     while True:
         pygame.display.update()
 
         canvas.fill('#0d7fbf')
 
         if len(questions) == 0:
-            canvas.blit(main_title, (250, 20))
+            canvas.blit(main_title, (205, 30))
         elif not is_game_finished:
-
+            # подгрузка и вывод на экран фото и текста для вопроса
             name_foto = questions[0][question_count]['foto'][0]
             foto = pygame.image.load(f'images/{name_foto}')
-            foto = pygame.transform.scale(foto, (500, 400))
-            canvas.blit(foto, (0, 0))
+            foto = pygame.transform.scale(foto, (questions[0][question_count]['xy'][0], questions[0][question_count]['xy'][1]))
+            canvas.blit(foto, ((1000-questions[0][question_count]['xy'][0]) // 2, 0))
 
             question_text = questions[0][question_count]['question']
 
-            question = question_font.render(question_text.encode('utf-8'), False, (255, 255, 255))
+            question = question_font.render(question_text.encode('utf-8'), False, (225, 225, 225))
 
-            blit_text(canvas, question_text, (20, 500), question_font)
+            blit_text(canvas, question_text, (20, 400), question_font)
         elif is_game_finished:
+            # финальное окно
             objects.clear()
-            exit_button = Button(400, 710, 200, 100, 'EXIT', end_game)
-            home_button = Button(400, 600, 200, 100, 'MENU', reset)
-            font = pygame.font.SysFont('Comic Sans MS', 60)
-            end_title = font.render('Поздравляем, вы прошли квиз!', False, (255, 255, 255))
-            score = font.render(f'Правильных ответов: {correct_count}', False, (255, 255, 255))
-
+            home_button = Button(400, 710, 200, 100, 'МЕНЮ', reset)
+            font = pygame.font.SysFont('Times New Roman', 60)
+            end_title = font.render('Поздравляем, вы прошли викторину!', False, (0, 0, 0))
+            score = font.render(f'Правильных ответов: {correct_count}', False, (0, 0, 0))
+            # вывод медалей
             medal = None
 
             if correct_count <= 3:
                 medal = pygame.image.load("images/three.png")
+                medal = pygame.transform.scale(medal, (550, 500))
+                canvas.blit(medal, (220, 270))
+
             elif 3 < correct_count <= 7:
                 medal = pygame.image.load("images/two.png")
+                medal = pygame.transform.scale(medal, (350, 430))
+                canvas.blit(medal, (325, 270))
             else:
+
                 medal = pygame.image.load("images/one.png")
-
-            medal = pygame.transform.scale(medal, (400, 300))
-
+                medal = pygame.transform.scale(medal, (550, 550))
+                canvas.blit(medal, ((1000-550)//2, 220))
 
             canvas.blit(end_title, (20, 20))
             canvas.blit(score, (20, 200))
-            canvas.blit(medal, [200, 200])
 
 
+
+
+        # рендеринг (отрисовка) всез обьектов на экране
         for object in objects:
             object.update()
-
+        # выход из программы
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
-'''
 
-def run_quiz():
-
-    num_correct = 0
-    for num, question in enumerate(questions, start=1):
-        print(f"\nQuestion {num}:")
-        num_correct += ask_question(question)
-
-    print(f"\nYou got {num_correct} correct out of {num} questions")
-
-def ask_question(question):
-    correct_answers = question["answers"]
-    alternatives = question["answers"] + question["alternatives"]
-    ordered_alternatives = random.sample(alternatives, k=len(alternatives))
-
-    answers = get_answers(
-        question=question["question"],
-        alternatives=ordered_alternatives,
-        num_choices=len(correct_answers),
-        hint=question.get("hint"),
-    )
-    if correct := (set(answers) == set(correct_answers)):
-        print("⭐ Correct! ⭐")
-    else:
-        is_or_are = " is" if len(correct_answers) == 1 else "s are"
-        print("\n- ".join([f"No, the answer{is_or_are}:"] + correct_answers))
-
-    if "explanation" in question:
-        print(f"\nEXPLANATION:\n{question['explanation']}")
-
-    return 1 if correct else 0
-
-def get_answers(question, alternatives, num_choices=1, hint=None):
-    print(f"{question}?")
-    labeled_alternatives = dict(zip(ascii_lowercase, alternatives))
-    if hint:
-        labeled_alternatives["?"] = "Hint"
-
-    for label, alternative in labeled_alternatives.items():
-        print(f"  {label}) {alternative}")
-
-    while True:
-        plural_s = "" if num_choices == 1 else f"s (choose {num_choices})"
-        answer = input(f"\nChoice{plural_s}? ")
-        answers = set(answer.replace(",", " ").split())
-
-        # Handle hints
-        if hint and "?" in answers:
-            print(f"\nHINT: {hint}")
-            continue
-
-        # Handle invalid answers
-        if len(answers) != num_choices:
-            plural_s = "" if num_choices == 1 else "s, separated by comma"
-            print(f"Please answer {num_choices} alternative{plural_s}")
-            continue
-
-        if any(
-            (invalid := answer) not in labeled_alternatives
-            for answer in answers
-        ):
-            print(
-                f"{invalid!r} is not a valid choice. "
-                f"Please use {', '.join(labeled_alternatives)}"
-            )
-            continue
-
-        return [labeled_alternatives[answer] for answer in answers
-'''
 
 
